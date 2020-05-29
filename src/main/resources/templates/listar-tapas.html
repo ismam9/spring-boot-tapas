@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	
+	<header th:replace="layout/layout :: header">
+	</header>
+	
+	<div id="hometapas">
+		
+		<h1 class="text-white" th:text="${title}"></h1>
+
+			<table id="tapasTable" class="display dt-responsive nowrap" style="width:100%">
+	      		<thead class="thead-dark">
+	  					<tr>
+		                <th>Id</th>
+						<th>Nombre</th>
+		                <th>Precio</th>
+						<th>Valoracion</th>
+						<th>Precio variable</th>
+						<th>Create at</th>
+	            	</tr>
+	       	 	</thead>
+		        <tbody>
+		            <tr>
+		                <th>Id</th>
+						<th>Nombre</th>
+		                <th>Precio</th>
+						<th>Valoracion</th>
+						<th>Precio variable</th>
+						<th>Create at</th>
+		            </tr>
+		        </tbody>
+		    </table>
+			
+		<div th:replace="categorias :: categorias">
+		</div>
+	</div>
+
+	
+	<footer th:replace="layout/layout :: footer">
+	</footer>
+	
+	<script th:replace="tapas/js/datatablestapasjs :: tapas"></script>
+	<script th:replace="tapas/js/votosjs :: votos"></script>
+	<script th:replace="tapas/js/categoriajs :: tapascategorias"></script>
+	
+</body>
+</html>

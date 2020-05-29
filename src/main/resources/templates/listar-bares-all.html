@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	
+	<header th:replace="layout/layout :: header">
+	</header>
+	
+	<div class="container py-4">
+	
+		<div id="card-bares" class="card px-0 text-light">
+			<div class="card-header" th:text="${title}"></div>
+			<a sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-xs" th:href="@{/bares/form}">Crear Bar</a>
+			
+			<div class="row mx-auto">
+				<div class="col-md-12 py-4" th:each="bar: ${bares}" style="border-bottom:1px solid white;">
+					
+					<img class="img-thumbnail rounded float-left" th:if="${#strings.isEmpty(bar.foto)}" style="max-width:25%;" src="https://us.123rf.com/450wm/lifeking/lifeking1605/lifeking160500083/56653314-vector-logo-o-icono-elemento-de-diseño-para-empresas.jpg?ver=6">
+					
+					<div th:unless="${#strings.isEmpty(bar.foto)}">
+						<img th:if="${#strings.length(bar.foto) > 0}"
+						class="img-thumbnail rounded float-left" style="max-width: 25%;"
+						th:src="@{'/bares/uploads-bares/' + ${bar.foto}}" th:alt="${bar.foto}" />
+						
+						<img class="img-thumbnail rounded float-left" th:unless="${#strings.length(bar.foto) > 0 or #strings.isEmpty(bar.foto)}" style="max-width:25%;" src="https://us.123rf.com/450wm/lifeking/lifeking1605/lifeking160500083/56653314-vector-logo-o-icono-elemento-de-diseño-para-empresas.jpg?ver=6">
+					</div>
+					
+				  	<div class="card-body">
+				    	<h5 th:text="${bar.nombre}" class="card-title"></h5>
+					    <p th:text="${bar.ubicacion}" class="card-text"></p>
+
+	  					<ul class="list-group list-group-flush">
+	    					<li th:text="${bar.createAt}" class="list-group-item text-warning"></li>
+	    					<li th:text="${bar.ubicacion}" class="list-group-item text-warning"></li>
+	  					</ul>
+	  					
+	  					<div class="navbar navbar-expand-sm">
+					  		<ul class="navbar-nav mr-auto">
+					  			<li class="nav-item">
+					  				<a th:href="@{/bares/ver-bar/} + ${bar.id}" th:text="'Ver'" class="nav-link"></a>
+					  			</li>
+					  		</ul>
+					  		<ul sec:authorize="hasRole('ROLE_ADMIN')" class="navbar-nav ml-auto">
+					  			<li class="nav-item">
+					  				<a th:href="@{/bares/form/} + ${bar.id}" th:text="'Editar'" class="btn btn-primary"></a>
+					  			</li>
+					  			<li class="nav-item">
+					  				<a th:href="@{/bares/eliminar/} + ${bar.id}" th:text="'Eliminar'" class="btn btn-danger"></a>
+					  			</li>
+					  		</ul>
+					  		<ul sec:authorize="hasRole('ROLE_BAR')" th:if="${#authentication.name == bar.nif}" class="navbar-nav ml-auto">
+					  			<li class="nav-item">
+					  				<a th:href="@{/bares/form/} + ${bar.id}" th:text="'Editar'" class="btn btn-primary"></a>
+					  			</li>
+					  			<li class="nav-item">
+					  				<a th:href="@{/bares/eliminar/} + ${bar.id}" th:text="'Eliminar'" class="btn btn-danger"></a>
+					  			</li>
+					  			
+					  		</ul>				  		
+						</div>
+					</div>
+				</div>				
+			</div>
+	
+		</div>
+	</div>
+
+	
+	<footer th:replace="layout/layout :: footer">
+	</footer>
+		
+</body>
+</html>

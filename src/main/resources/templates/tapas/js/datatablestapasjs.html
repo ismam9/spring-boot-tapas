@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<script type="text/javascript" th:fragment="tapas">
+	
+		$(document).ready( function () {
+			console.log("datatables");
+		 	var table = $('#tapasTable').DataTable({
+			 	"responsive": true,
+				"sAjaxSource": "/tapast",
+				"sAjaxDataProp": "",
+				"order": [ 0, "asc" ],
+				"aoColumns": [
+			    		{ "mData": "id"},
+			      		{ "mData": "nombre" },
+					  	{ "mData": "precio" },
+				 	 	{ "mData": "valoracion" },
+					  	{ "mData": "preciovariable" },
+					  	{ "mData": "createAt" }
+				]
+			 })
+		});
+	
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+		
+	<div th:fragment="modal" class="modal" id="myModal">
+    	<div class="modal-dialog modal-sm">
+      		<div class="modal-content">
+      
+        <!-- Modal Header -->
+		        <div class="modal-header">
+		          	<h4 class="modal-title">Registro</h4>
+		          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+        
+        <!-- Modal body -->
+		        <div class="modal-body">
+		        	<div class="row">
+		        		<div class="col-md-6">
+		        			<ul class="list-group mx-auto">
+								<li class="list-group-item" sec:authorize="!isAuthenticated()" th:text="'Bares'"></li>
+				        		<li class="list-group-item" sec:authorize="!isAuthenticated()"><a class="btn btn-outline-primary" th:href="@{/bares/form}"><i class="fas fa-utensils"></i></a></li>
+							</ul>
+		        		</div>
+		        		<div class="col-md-6">
+		        			<ul class="list-group mx-auto">
+								<li class="list-group-item" sec:authorize="!isAuthenticated()" th:text="'Users'"></li>
+				        		<li class="list-group-item" sec:authorize="!isAuthenticated()"><a class="btn btn-outline-primary" th:href="@{/signup}"><i class="fas fa-user"></i></a></li>
+							</ul>
+		        		</div>
+		        	</div>
+		        </div>
+	        
+	        <!-- Modal footer -->
+		        <div class="modal-footer">
+		          	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		        </div>
+        
+      		</div>
+    	</div>
+  </div>
+	
+	
+</body>
+</html>

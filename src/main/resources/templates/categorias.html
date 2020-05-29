@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+
+	<div class="container px-0" id="categoriastapas" th:fragment="categorias">
+	
+		<div class="jumbotron">El mercado de las TAPAS 100% SPAIN</div>
+       	
+       	<nav class="navbar justify-content-end flex-nowrap">
+	  		<div class="nav nav-tabs" id="nav-tab" role="tablist">
+			    <a class="nav-item nav-link active" id="nav-comida-tab" data-toggle="tab" href="#nav-comida" role="tab">Comidas</a>
+			    <a class="nav-item nav-link" id="nav-bebida-tab" data-toggle="tab" href="#nav-bebida" role="tab">Bebidas</a>
+		  </div>
+		</nav>
+		<div class="tab-content" id="nav-tabContent" style="border:1px solid white">
+	  		<div class="tab-pane fade show active" id="nav-comida" role="tabpanel">
+	  			<div th:replace="comida/comidaindex :: comidas"></div>
+	  		</div>
+	  		<div class="tab-pane fade" id="nav-bebida" role="tabpanel">
+	  			<div th:replace="bebida/bebidaindex :: bebidas"></div>
+	  		</div>
+		</div>
+    	
+   	</div>
+	
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<script type="text/javascript" th:fragment="votos">
+	
+	jQuery(document).ready(function(){
+	  
+		//const full = $('input[name="voto"]');
+		//full.attr("value", "\uf004").css({"font-family": "'Font Awesome 5 Free'"});
+		//full.css({"font-weight": "900"});
+		$.ajax({
+	        type: "GET",
+	        url: "/isvoted",
+	        success: function(result) {	      
+	
+	        	//const full = $('input[class="votolove"]');
+	        	
+	        	const fulletaso = $('input[class="votolove"]');
+	        	fulletaso.attr("value", "\uf004").css({"font-family": "'Font Awesome 5 Free'"});
+	    		
+	        	console.log(fulletaso);
+	        	
+	        	if (result === undefined || result.length == 0)
+	        		console.log("no hay votos");
+        		else if (typeof(result) == "string")
+        			console.log("you are not logger, you should be logged to see the VOTES");
+	        	else
+	        		for (var voto of result) {
+	        			var votado = true;
+	        			switch(voto) {
+		        		  case votado:
+		        		    // code block
+		        		    fulletaso.css({"font-weight": "900"});
+		        		    continue;
+		        		  case !votado:
+		        		    // code block
+		        		    fulletaso.css({"font-weight": "200"});
+		        		    continue;
+		        		  default:
+		        		    // code block
+		        		    fulletaso;
+		        		}
+	        				//full.attr("value", "\uf004").css({"font-family": "'Font Awesome 5 Free'", "font-weight": "900"});
+	        				//$('p[id="isvoted"]').html('<i class="fas fa-heart"></i>');
+
+	        				//full.attr("value", "\uf004").css({"font-family": "'Font Awesome 5 Free'", "font-weight": "200"});
+	        				///$('p[id="isvoted"]').html('<i class="far fa-heart"></i>');
+	        		}
+        		
+	        },
+	        error: function(result) {
+	        	console.log("error");
+	        }
+	    });
+		
+	  $('input[name="voto"]').click(function(e) {
+		    e.preventDefault();
+		    var $formElem = $(this).closest('form');
+		    var formData = $formElem.serializeArray();
+		    //var vacio $(this).css({"font-weight": "200"});
+		    
+		    formData.push({
+		        name: 'form',
+		        value: $(this).attr('form')
+		    });
+		    console.log('hola');
+		    
+		    $.ajax({
+		        type: "POST",
+		        url: "/votecreate",
+		        data : formData,
+		        success: function(result) {
+		            alert('voto realizado');
+		            //fulletaso;
+		        },
+		        error: function(result) {
+		            alert('error');
+		        }
+		    });
+
+		    
+		});
+	  
+	});
+
+	
+	</script>
+
+
+</body>
+</html>

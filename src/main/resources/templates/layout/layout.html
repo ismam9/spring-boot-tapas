@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+<meta charset="UTF-8" />
+<title th:text="${title}"></title>
+
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https:////cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<link rel="stylesheet" th:href="@{/css/portada.css}" />
+</head>
+<body>
+
+	<header th:fragment="header">
+		<nav id="navbar" class="navbar navbar-expand-md navbar-fixed-top">
+			<a class="navbar-brand" th:href="@{/home/}"><i class="fas fa-seedling fa-2x"></i></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span ><i class="fas fa-ellipsis-v"></i></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/home/}">Tapas<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/bares/}" >Bares</a></li>
+				</ul>
+				<ul class="navbar-nav ml-auto">
+					<li sec:authorize="!isAuthenticated()">
+						<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#myModal">
+							<i class="far fa-plus-square fa-lg"></i>
+					  	</button>
+				  	</li>
+				  	<div th:replace="loginmodal :: modal"></div>
+				  	<li sec:authorize="!isAuthenticated()"><a class="btn btn-outline-primary" th:href="@{/login}"><i class="fas fa-sign-in-alt fa-lg"></i></a></li>
+
+					<li sec:authorize="isAuthenticated()" class="dropdown show"><a
+						class="btn btn-outline-danger btn-sm dropdown-toggle" href="#"
+						role="button" id="dropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"><span
+							sec:authentication="name"></span></a>
+
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+							<form class="dropdown-item" id="logoutForm" th:action="@{/logout}" method="post">
+								<button class="btn btn-sm"
+									onclick="document.getElementById('logoutForm').submit();"
+									type="submit"><i class="fas fa-sign-out-alt fa-lg"></i></button>
+								<input type="hidden" th:name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
+							</form>
+						</div>
+						
+					</li>
+					
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="alert alert-success" th:if="${success !=null}"
+			th:text="${success}"></div>
+		<div class="alert alert-warning" th:if="${error !=null}"
+			th:text="${error}"></div>
+		<div class="alert alert-danger" th:if="${warning !=null}"
+			th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info !=null}" th:text="${info}"></div>
+
+	</header>
+	
+	<footer class="container py-0 bg-white text-warning" th:fragment="footer" style="border-radius:5px;">
+		
+		<!-- <p sec:authorize="isAuthenticated() ">
+			Usuario logeado: <span sec:authentication="name"></span> | Roles: <span
+				sec:authentication="principal.authorities"></span>
+		</p>  -->
+		
+		<div class="row py-2 my-2 d-flex align-items-center">
+
+        <!-- Grid column -->
+	        <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+	          <h6 class="mb-0">Get connected with us on social networks!</h6>
+	        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+          <!-- Twitter -->
+       		<a class="">
+            	<i class="fab fa-twitter fa-2x"></i>
+          	</a>
+          <!-- Instagram +-->
+          	<a class="">
+            	<i class="fab fa-instagram fa-2x"></i>
+          	</a>
+          <!--Soundcloud -->
+          	<a class="">
+            	<i class="fab fa-soundcloud fa-2x"></i>
+          	</a>
+          <!--Youtube-->
+          	<a class="">
+            	<i class="fab fa-youtube fa-2x"></i>
+          	</a>
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+			
+		<div class="row">
+			<div class="col-md-3">
+				<h6 class="text-uppercase font-weight-bold">Tapicas Guenas</h6>
+		        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+		        <p>Proyecto encabezado por el conglomerado Walkout Studio. Sabemos que esto es solo el principio y hay mucho que mejorar. Gracias por el apoyo!!
+	          	</p>
+			</div>
+			<div class="col-md-3">
+				<h6 class="text-uppercase font-weight-bold">Useful links</h6>
+		        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+		        <p>
+		          <a href="#!">:)</a>
+		        </p>
+		        <p>
+		          <a href="#!">Sé uno de los nuestros</a>
+		        </p>
+		        <p>
+		          <a href="#!">Empresas</a>
+		        </p>
+		        <p>
+		          <a href="#!">Ayuda y Errores</a>
+		        </p>
+			</div>
+			<div class="col-md-3">
+				<h6 class="text-uppercase font-weight-bold">Contact</h6>
+		        <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+		        <p>
+		          <i class="fas fa-home mr-3"></i> Madrid </p>
+		        <p>
+		          <i class="fas fa-envelope mr-3"></i> info@example.com</p>
+		        <p>
+		          <i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+		        <p>
+		          <i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+			</div>
+		</div>
+
+<script src="https://kit.fontawesome.com/e07e9a73f2.js"></script>
+
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- datatables -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.4/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.4/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+
+<script th:src="@{/js/minejquery.js}"></script>
+<script th:src="@{/js/jquery-ui.min.js}"></script>
+	</footer>
+
+
+
+</body>
+</html>

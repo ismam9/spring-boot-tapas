@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+
+	<div th:fragment="tapasinbar">
+		
+		<div class="d-flex" th:each="tapa: ${bar.tapas}">
+		 				
+			<div class="col-sm-12">
+			    <div class="card h-100 my-0">
+	    			<div class="card-header">
+	    				<div class="row">
+	    					<h5 class="w-75 mx-4" th:text="${tapa.precio} + ' €'"></h5>
+	    					<div class="mr-auto text-white">
+	    						<p th:if="${tapa.comida.categoriacomida.tipo == 'Carnica'}" class="card-text"><i class="fas fa-bacon fa-sm"></i></p>
+			        			<p th:if="${tapa.comida.categoriacomida.tipo == 'Vegetariana'}" class="card-text mr-auto"><i class="fas fa-egg fa-sm"></i></p>
+			        			<p th:if="${tapa.comida.categoriacomida.tipo == 'Vegana'}" class="card-text mr-auto"><i class="fas fa-seedling fa-sm"></i></p>
+	    					</div>
+	    					<div class="mr-auto text-white">
+	    						<p th:if="${tapa.bebida.categoriabebida.tipo == 'Vino'}" class="card-text"><i class="fas fa-wine-glass-alt fa-sm"></i></p>
+			        			<p th:if="${tapa.bebida.categoriabebida.tipo == 'Refresco'}" class="card-text mr-auto"><i class="fas fa-tint fa-sm"></i></p>
+			        			<p th:if="${tapa.bebida.categoriabebida.tipo == 'Cerveza'}" class="card-text mr-auto"><i class="fas fa-beer fa-sm"></i></p>
+			        			<p th:if="${tapa.bebida.categoriabebida.tipo == 'All'}" class="card-text mr-auto"><i class="fas fa-glass-cheers fa-sm"></i></p>
+	    					</div>
+	    				</div>
+	    			</div>
+		      		<div class="card-body">
+		      			<div class="navbar navbar-expand">
+							<ul class="navbar-nav mr-auto">
+					  			<li class="nav-item text-warning">
+					  				<h5 th:text="${tapa.nombre}"></h5>
+					  			</li>
+				  			</ul>
+				  			
+							<ul sec:authorize="hasRole('ROLE_ADMIN')" class="navbar-nav ml-auto">
+					  			<li class="nav-item">
+					  				<a th:href="@{/tapas/editform/} + ${tapa.id}" th:text="'Editar'" class="btn btn-primary"></a>
+					  			</li>
+					  			<li class="nav-item">
+					  				<a th:href="@{/tapas/eliminar/} + ${tapa.id}" th:text="'Eliminar'" class="btn btn-danger"></a>
+					  			</li>
+				  			</ul>
+				  			<ul sec:authorize="hasRole('ROLE_BAR')" th:if="${#authentication.name == bar.nif}" class="navbar-nav ml-auto">
+					  			<li class="nav-item">
+					  				<a th:href="@{/tapas/editform/} + ${tapa.id}" th:text="'Editar'" class="btn btn-primary"></a>
+					  			</li>
+					  			<li class="nav-item">
+					  				<a th:href="@{/tapas/eliminar/} + ${tapa.id}" th:text="'Eliminar'" class="btn btn-danger"></a>
+					  			</li>
+				  			</ul>
+						</div>
+
+			      		<div class="row px-4">
+			        		<p class="card-text mr-auto" th:text="'Contenido : ' + ${tapa.comida.nombre}"><i class="fas fa-bacon"></i></p>
+			        		<p class="card-text mr-auto" th:text="'Bebidas incluidas: ' + ${tapa.bebida.nombre}"></p>
+			        	</div>
+			        	
+			      	</div>
+			    </div>
+	  		</div>
+	  	
+		</div>
+		
+	</div>
+
+</body>
+</html>

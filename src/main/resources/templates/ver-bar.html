@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	
+	<header th:replace="layout/layout :: header">
+	</header>
+	
+	<div class="container py-4">
+		
+		<div class="card">
+			<div class="card-header text-white" th:text="${title}"></div>
+			<!-- <a class="btn btn-dark btn-xs" th:href="@{/form}">crear productor</a>-->
+			<div class="row px-4">
+				<div class="card my-2">
+  					
+  					<div class="card-body">
+						<h4 class="card-title px-4">
+							<div class="navbar navbar-expand">
+								<ul class="navbar-nav mr-auto">
+						  			<li class="nav-item">
+						  				<a th:href="@{'/bares/'}" class="btn btn-secondary">&laquo; volver</a>
+						  			</li>
+					  			</ul>
+					  			<ul class="navbar-nav ml-auto" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_BAR')" th:if="${#authentication.name == bar.nif}">
+						  			<li class="nav-item">
+						  				<a th:href="@{/tapas/form/} + ${bar.id}" th:text="'Crear Tapa'" class="btn btn-success"></a>
+						  				<a th:href="@{/raciones/form/} + ${bar.id}" th:text="'Crear Racion'" class="btn btn-success"></a>
+						  			</li>
+					  			</ul>
+							</div>
+							
+						</h4>
+						
+						<div class="row py-4 px-4">
+							<div class="col-md-3">
+								<img class="img-thumbnail rounded float-left" th:if="${#strings.isEmpty(bar.foto)}" style="max-width:100%;" src="https://us.123rf.com/450wm/lifeking/lifeking1605/lifeking160500083/56653314-vector-logo-o-icono-elemento-de-diseño-para-empresas.jpg?ver=6">
+								
+								<div th:unless="${#strings.isEmpty(bar.foto)}">
+									<img th:if="${#strings.length(bar.foto) > 0}"
+										class="img-thumbnail rounded float-left" style="max-width: 100%;"
+										th:src="@{'/bares/uploads-bares/' + ${bar.foto}}" th:alt="${bar.foto}" />
+							
+									<img class="img-thumbnail rounded float-left" th:unless="${#strings.length(bar.foto) > 0 or #strings.isEmpty(bar.foto)}" style="max-width:100%;" src="https://us.123rf.com/450wm/lifeking/lifeking1605/lifeking160500083/56653314-vector-logo-o-icono-elemento-de-diseño-para-empresas.jpg?ver=6">
+								</div>
+							</div>
+																		
+							<div class="col-md-8">
+								<ul class="list-group text-dark">
+									<li class="list-group-item list-group-item-success"
+										th:text="${bar.nombre}"></li>
+									<li class="list-group-item" th:text="'Id: ' + ${bar.ubicacion}"></li>
+									<li class="list-group-item"
+										th:text="'Descripción: ' + ${bar.descripcion}"></li>
+									<li class="list-group-item"
+										th:text="'Fecha: ' + ${bar.createAt}"></li>
+								</ul>
+							</div>
+													
+							<!--<ul sec:authorize="hasRole('ROLE_ADMIN')" class="list-group px-2 text-light">
+								<li class="list-group-item list-group-item-success"
+									th:text="'Acciones'"></li>
+								<!-- <li class="list-group-item" th:text="'Editar'"><a th:href="@{/album/form/} + ${album.id}" th:text="'editar'" class="btn btn-primary">Editar</a></li>
+								<li class="list-group-item"><a class="btn btn-danger btn-xs" th:href="@{'/album/eliminar/' + ${album.id}}" th:text="'eliminar'" onclick="return confirm('Estas seguro que desea eliminar el album?');"></a></li>
+							</ul>
+							 --> 
+						</div>
+		
+						<div class="alert alert-info"
+							th:if="${#lists.isEmpty(bar.tapas)}"
+							th:text="'No hay tapas para el bar' + ${bar.descripcion}"></div>
+						
+						<div th:if="${not #lists.isEmpty(bar.tapas)}">
+							
+							<ul class="nav nav-pills">
+							    <li class="nav-item">
+							      <a class="nav-link active" data-toggle="pill" href="#tapas">Tapas</a>
+							    </li>
+							    <li class="nav-item">
+							      <a class="nav-link" data-toggle="pill" href="#raciones">Raciones</a>
+							    </li>
+						  	</ul>
+							  		
+				  			<div class="tab-content">
+							    <div id="tapas" class="tab-pane fade show active"><br>
+							    	<div th:replace="tapas/tapas-bar :: tapasinbar">
+					       			</div>
+							    </div>
+							    <div id="raciones" class="tab-pane fade"><br>
+							     	<div th:replace="raciones/raciones-bar :: racionesinbar">
+					       			</div>
+							    </div> 
+					  		</div>
+							
+							</div>
+						</div>
+		
+						<div class="card border-info mb-4" style="max-width: 20rem;">
+							<div class="header">Comentarios</div>
+		
+							<!-- <div class="card-body">
+								<p class="card-text" th:text="${factura.observacion}"
+									th:if="${not #strings.isEmpty(factura.observacion)}"></p>
+								<h4 class="card-title"
+									th:if="${#strings.isEmpty(factura.observacion)}"
+									th:text="'No tiene observaciones'"></h4>
+							</div>
+							-->
+						</div>
+		
+						<!-- <a th:href="@{'/ver/' + ${factura.cliente.id}}"
+							class="btn btn-secondary">&laquo; volver</a> -->
+		
+					</div>
+				  	
+				</div>
+				
+			</div>				
+		</div>
+		
+	</div>
+	
+
+	<footer  th:replace="layout/layout :: footer"></footer>
+	
+</body>
+</html>

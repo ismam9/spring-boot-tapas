@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+
+	<div class="container" th:fragment="bebidas">
+	
+		<div class="row d-flex flex-row">
+			
+			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+		  		<li class="nav-item" role="presentation" th:each="categ, categStat: ${categbebida}">
+		    		<a class="nav-link" th:classappend="${categStat.first} ? 'active'" data-toggle="pill" th:href="@{'#'+ ${categ.tipo}}" role="tab" th:text="${categ.tipo}"></a>
+		  		</li>
+			</ul>
+
+		</div>
+		
+		<div class="tab-content" id="pills-tabContent">
+ 			<div class="tab-pane fade" th:classappend="${categStat.first} ? 'show active'" th:id="${categ.tipo}" th:each="categ, categStat: ${categbebida}">
+ 				<div th:each="bebida : ${categ.bebidas}">
+			 		<div class="d-flex" th:each="tapa : ${bebida.tapas}">
+		 				
+		 				<div class="col-sm-12">
+						    <div class="card h-100">
+				    			<div class="card-header">
+				    				<div class="row">
+				    					<h5 class="w-75 mx-4" th:text="${tapa.nombre}"></h5>
+				    					<div class="mr-auto">
+				    						<p th:if="${tapa.comida.categoriacomida.tipo == 'Carnica'}" class="card-text"><i class="fas fa-bacon fa-sm"></i></p>
+						        			<p th:if="${tapa.comida.categoriacomida.tipo == 'Vegetariana'}" class="card-text mr-auto"><i class="fas fa-egg fa-sm"></i></p>
+						        			<p th:if="${tapa.comida.categoriacomida.tipo == 'Vegana'}" class="card-text mr-auto"><i class="fas fa-seedling fa-sm"></i></p>
+				    					</div>
+				    					<div class="mr-auto">
+				    						<p th:if="${tapa.bebida.categoriabebida.tipo == 'Vino'}" class="card-text"><i class="fas fa-wine-glass-alt fa-sm"></i></p>
+						        			<p th:if="${tapa.bebida.categoriabebida.tipo == 'Refresco'}" class="card-text mr-auto"><i class="fas fa-tint fa-sm"></i></p>
+						        			<p th:if="${tapa.bebida.categoriabebida.tipo == 'Cerveza'}" class="card-text mr-auto"><i class="fas fa-beer fa-sm"></i></p>
+						        			<p th:if="${tapa.bebida.categoriabebida.tipo == 'All'}" class="card-text mr-auto"><i class="fas fa-glass-cheers fa-sm"></i></p>
+				    					</div>
+				    				</div>
+				    			</div>
+					      		<div class="card-body">
+						      		<a th:text="'Ver tapa'" th:href="@{/tapas/ver-tapa/} + ${tapa.id}" style="float:right;"></a>
+						      		<div class="row">
+						      			<div th:if="${tapa.comida.nombre} == Carnica"></div>
+						        		<p class="card-text mr-auto" th:text="'Contenido : ' + ${tapa.comida.nombre}"><i class="fas fa-bacon"></i></p>
+						        		<p class="card-text mr-auto" th:text="'Bebidas incluidas: ' + ${tapa.bebida.nombre}"></p>
+						        	</div>
+						      	</div>
+						    </div>
+					  	</div>
+	 				</div>
+			 	</div>
+        	</div>
+		</div>
+		
+	</div>
+	
+	
+</body>
+</html>
